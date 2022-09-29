@@ -19,4 +19,21 @@ class SpotifyData{
 
     return listOfFeaturedItems;
   }
+
+   Future<String> FetchPlayistsTracks(String playlist_id) async {
+     var featuredData = await http.get(Uri.parse('	https://api.spotify.com/v1/playlists/${playlist_id}/tracks'),
+       headers: {
+         "content-type": 'application/json',
+         "authorization": 'Bearer $Access_Token',
+         // HttpHeaders.acceptHeader: 'application/json',
+       },
+     );
+     var tracks = featuredData;
+     return 'Hi';
+     // var featuredPlaylist = featuredFromJson(featuredData.body).playlists ;
+     // List<PlaylistItem> listOfFeaturedItems = featuredPlaylist.items!;
+     // print('Albums are :- $featuredPlaylist');
+
+     //return listOfFeaturedItems;
+   }
 }
