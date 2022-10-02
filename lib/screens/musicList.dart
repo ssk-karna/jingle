@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:jingle/models/tracks.dart';
 import 'package:jingle/service/spotify_data.dart';
 
 class MusicList extends StatefulWidget {
@@ -13,15 +14,16 @@ class MusicList extends StatefulWidget {
 }
 
 class _MusicListState extends State<MusicList> {
+  List<TrackItems> trackItems = <TrackItems>[];
   @override
   void initState() {
     // TODO: implement initState
     super.initState();
-    //getTracksAsync();
+    getTracksAsync();
   }
 
   getTracksAsync() async {
-     await SpotifyData().FetchPlayistsTracks(widget.listId);
+    trackItems = await SpotifyData().FetchPlayistsTracks(widget.listId);
   }
 
   @override
