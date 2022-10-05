@@ -56,7 +56,7 @@ class TrackItems {
     this.addedBy,
     this.isLocal,
     this.primaryColor,
-    this.track,
+    required this.track,
     this.videoThumbnail,
   });
 
@@ -64,7 +64,7 @@ class TrackItems {
   AddedBy? addedBy;
   bool? isLocal;
   dynamic primaryColor;
-  Track? track;
+  Track track;
   VideoThumbnail? videoThumbnail;
 
   factory TrackItems.fromJson(Map<String, dynamic> json) => TrackItems(
@@ -159,7 +159,7 @@ class Track {
     this.href,
     this.id,
     this.isLocal,
-    this.name,
+    required this.name,
     this.popularity,
     this.previewUrl,
     this.track,
@@ -180,7 +180,7 @@ class Track {
   String? href;
   String? id;
   bool? isLocal;
-  String? name;
+  String name;
   int? popularity;
   String? previewUrl;
   bool? track;

@@ -15,8 +15,7 @@ class RemoteApiService {
     var authResp = await client.requestAuthorization(
       clientId: CLIENT_ID,
       customParams: {'show_dialog': 'true'},
-
-      //scopes: ['user-read-private', 'user-read-playback-state', 'user-modify-playback-state', 'user-read-currently-playing', 'user-read-email']
+      scopes: ['user-read-private', 'user-read-playback-state', 'user-modify-playback-state', 'user-read-currently-playing', 'user-read-email']
     );
     var authCode = authResp.code;
 

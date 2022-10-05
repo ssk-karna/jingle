@@ -1,6 +1,8 @@
 
 import 'dart:convert';
 
+import 'package:jingle/models/devices.dart';
+
 import '../constants.dart';
 import '../models/featured.dart';
 import '../models/tracks.dart';
@@ -32,6 +34,23 @@ class SpotifyData{
        },
      );
      List<TrackItems> tracksList = tracksFromJson(tracksData.body).items! ;
+     return tracksList;
+     // var featuredPlaylist = featuredFromJson(featuredData.body).playlists ;
+     // List<PlaylistItem> listOfFeaturedItems = featuredPlaylist.items!;
+     // print('Albums are :- $featuredPlaylist');
+
+     //return listOfFeaturedItems;
+   }
+
+   Future<List<AvailableDevice>> FetchDevies() async {
+     var tracksData = await http.get(Uri.parse('https://api.spotify.com/v1/me/player/devices'),
+       headers: {
+         "content-type": 'application/json',
+         "authorization": 'Bearer $Access_Token',
+         // HttpHeaders.acceptHeader: 'application/json',
+       },
+     );
+     List<AvailableDevice> tracksList = devicesFromJson(tracksData.body).devices! ;
      return tracksList;
      // var featuredPlaylist = featuredFromJson(featuredData.body).playlists ;
      // List<PlaylistItem> listOfFeaturedItems = featuredPlaylist.items!;
