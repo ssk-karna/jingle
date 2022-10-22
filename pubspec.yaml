@@ -38,6 +38,7 @@ dependencies:
   spotify: ^0.8.0
   oauth2_client: ^2.4.2
   google_fonts: ^3.0.1
+  device_info_plus: ^3.2.3
 
 
 dev_dependencies:

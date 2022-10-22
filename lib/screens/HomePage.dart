@@ -21,7 +21,6 @@ class _HomePageState extends State<HomePage> {
     super.initState();
     getFeaturedListAsync();
   }
-
   getFeaturedListAsync() async {
       featuredItems = await SpotifyData().FetchFeaturedPlayists();
   }
@@ -49,7 +48,7 @@ class _HomePageState extends State<HomePage> {
                               child: InkWell(
                                 onTap: (){
                                   Navigator.push(context, MaterialPageRoute(
-                                      builder: (context) =>  MusicList( listId: '${featuredItems[index].id}')));
+                                      builder: (context) =>  MusicList( listId: '${featuredItems[index].id}', playListPoster: '${featuredItems[index].images![0].url}')));
                                 },
                                 child: Stack(
                                 alignment: Alignment.center,

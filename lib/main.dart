@@ -3,6 +3,7 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:jingle/releases.dart';
 import 'package:jingle/screens/HomePage.dart';
+import 'package:jingle/screens/albumsList.dart';
 import 'package:jingle/screens/loginPage.dart';
 import 'package:jingle/service/remote_api_service.dart';
 import 'constants.dart';
