@@ -29,9 +29,7 @@ class _MusicListState extends State<MusicList> {
 
   getTracksAsync() async {
     trackItems = await SpotifyData().FetchPlayistsTracks(widget.listId);
-    setState(() {
-
-    });
+    setState(() { });
   }
 
   getDevicessAsync() async {

@@ -6,6 +6,7 @@ import 'package:device_info_plus/device_info_plus.dart';
 import '../constants.dart';
 import 'dart:io';
 import '../models/featured.dart';
+import '../models/play.dart';
 import '../models/tracks.dart';
 import 'package:http/http.dart' as http;
 
@@ -37,11 +38,7 @@ class SpotifyData{
      
      List<TrackItems> tracksList = tracksFromJson(tracksData.body).items! ;
      return tracksList;
-     // var featuredPlaylist = featuredFromJson(featuredData.body).playlists ;
-     // List<PlaylistItem> listOfFeaturedItems = featuredPlaylist.items!;
-     // print('Albums are :- $featuredPlaylist');
 
-     //return listOfFeaturedItems;
    }
 
    Future<String?> _getId() async {
@@ -69,11 +66,24 @@ class SpotifyData{
      List<AvailableDevice> tracksList = devicesFromJson(tracksData.body).devices! ;
      return tracksList;
 
-     //Poco F1 - 8187ca277f6a02c99ccb7f649812b44aa4b16369
-     //emulator - 64d484cbb96d617a331b9b8044ade1e3bba36e1b
-     // var featuredPlaylist = featuredFromJson(featuredData.body).playlists ;
-     // List<PlaylistItem> listOfFeaturedItems = featuredPlaylist.items!;
-     // print('Albums are :- $featuredPlaylist');
-     //return listOfFeaturedItems;
+
+   }
+    PlayMusic(String album_id, String device_id) async {
+     var offsetVal = Offset(position: 5);
+     var selectedMusic = Play(
+      contextUri: "spotify:album:$album_id",
+       offset: offsetVal,
+       positionMs: 0
+     );
+
+     var playIt = await http.put(Uri.parse('https://api.spotify.com/v1/me/player/play?device_id=$device_id'),
+       headers: {
+         "Content-Type": 'application/json',
+         "authorization": 'Bearer $Access_Token',
+         // HttpHeaders.acceptHeader: 'application/json',
+       },
+       body: json.encode(selectedMusic)
+     );
+
    }
 }
