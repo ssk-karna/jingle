@@ -39,6 +39,9 @@ dependencies:
   oauth2_client: ^2.4.2
   google_fonts: ^3.0.1
   device_info_plus: ^3.2.3
+  appcheck: ^1.0.6
+  external_app_launcher: ^3.1.0
+  shared_preferences: ^2.0.15
 
 
 dev_dependencies:

@@ -1,8 +1,9 @@
+import 'package:external_app_launcher/external_app_launcher.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:jingle/models/featured.dart';
 import 'package:jingle/service/spotify_data.dart';
-
+import '../constants.dart';
 import 'musicList.dart';
 
 class HomePage extends StatefulWidget {
@@ -20,7 +21,23 @@ class _HomePageState extends State<HomePage> {
     // TODO: implement initState
     super.initState();
     getFeaturedListAsync();
+    if(Device_ID == ""){
+      SpotifyData().LaunchSpotifyApp();
+      SetId();
+    }
+    else{
+      SpotifyData().PlayMusic("3nU4o4IZJeieME6NYAgP1x");
+    }
   }
+
+   CheckSpotifyApp() async {
+     await SpotifyData().CheckSpotifyInstalledOnDevice();
+   }
+   SetId() async {
+     await SpotifyData().FetchDevies();
+     var id = Device_ID;
+   }
+
   getFeaturedListAsync() async {
       featuredItems = await SpotifyData().FetchFeaturedPlayists();
   }

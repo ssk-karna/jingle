@@ -1,5 +1,13 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.example.jingle">
+
+    <uses-permission android:name="android.permission.QUERY_ALL_PACKAGES" />
+    <queries>
+        <package android:name="com.google.android.apps.maps"/>
+        <package android:name="com.android.chrome"/>
+        <package android:name="com.spotify.music"/>
+    </queries>
+
    <application
         android:label="jingle"
         android:name="${applicationName}"

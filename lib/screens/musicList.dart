@@ -24,16 +24,11 @@ class _MusicListState extends State<MusicList> {
     super.initState();
     getTracksAsync();
     var  poster = widget.playListPoster;
-    getDevicessAsync();
   }
 
   getTracksAsync() async {
     trackItems = await SpotifyData().FetchPlayistsTracks(widget.listId);
     setState(() { });
-  }
-
-  getDevicessAsync() async {
-    devices = await SpotifyData().FetchDevies();
   }
 
   @override

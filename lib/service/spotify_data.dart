@@ -1,13 +1,17 @@
 
 import 'dart:convert';
-
+import 'package:appcheck/appcheck.dart';
+import 'package:external_app_launcher/external_app_launcher.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:jingle/models/devices.dart';
 import 'package:device_info_plus/device_info_plus.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import '../constants.dart';
 import 'dart:io';
 import '../models/featured.dart';
 import '../models/play.dart';
 import '../models/tracks.dart';
+import '../constants.dart';
 import 'package:http/http.dart' as http;
 
 class SpotifyData{
@@ -52,23 +56,29 @@ class SpotifyData{
      }
    }
 
-   Future<List<AvailableDevice>> FetchDevies() async {
+   Future<void> LaunchSpotifyApp() async {
+     await LaunchApp.openApp(
+         androidPackageName: 'com.spotify.music');
+   }
 
-     String? deviceID = await _getId();
+   Future<void> FetchDevies() async {
 
-     var tracksData = await http.get(Uri.parse('https://api.spotify.com/v1/me/player/devices'),
+     //String? deviceID = await _getId();
+     final prefs = await SharedPreferences.getInstance();
+     var devicesResponse = await http.get(Uri.parse('https://api.spotify.com/v1/me/player/devices'),
        headers: {
          "content-type": 'application/json',
          "authorization": 'Bearer $Access_Token',
-         // HttpHeaders.acceptHeader: 'application/json',
+         HttpHeaders.acceptHeader: 'application/json',
        },
      );
-     List<AvailableDevice> tracksList = devicesFromJson(tracksData.body).devices! ;
-     return tracksList;
-
-
+     List<AvailableDevice> availableDevices = devicesFromJson(devicesResponse.body).devices! ;
+     await prefs.setString('deviceid', availableDevices[0].id.toString());
+     Device_ID = prefs.getString('deviceid');
    }
-    PlayMusic(String album_id, String device_id) async {
+
+
+    PlayMusic(String album_id) async {
      var offsetVal = Offset(position: 5);
      var selectedMusic = Play(
       contextUri: "spotify:album:$album_id",
@@ -76,7 +86,7 @@ class SpotifyData{
        positionMs: 0
      );
 
-     var playIt = await http.put(Uri.parse('https://api.spotify.com/v1/me/player/play?device_id=$device_id'),
+     var playIt = await http.put(Uri.parse('https://api.spotify.com/v1/me/player/play?device_id=$Device_ID'),
        headers: {
          "Content-Type": 'application/json',
          "authorization": 'Bearer $Access_Token',
@@ -85,5 +95,24 @@ class SpotifyData{
        body: json.encode(selectedMusic)
      );
 
+   }
+
+   Future<void> CheckSpotifyInstalledOnDevice() async {
+     if (Platform.isAndroid) {
+       const package = "com.spotify.music";
+       var _installedApps = await AppCheck.getInstalledApps();
+       await AppCheck.checkAvailability(package).then(
+             (app) => debugPrint(app.toString()),
+       );
+
+       await AppCheck.isAppEnabled(package).then(
+             (enabled) => enabled
+             ? debugPrint('$package enabled')
+             : debugPrint('$package disabled'),
+       );
+      bool check  = true;
+     // Returns: true
+
+   }
    }
 }
