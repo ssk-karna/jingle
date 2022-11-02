@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:jingle/models/tracks.dart';
 import 'package:jingle/service/spotify_data.dart';
 import 'package:spotify/spotify.dart';
+import '../constants.dart';
 import '../models/devices.dart';
 
 class MusicList extends StatefulWidget {

@@ -25,9 +25,6 @@ class _HomePageState extends State<HomePage> {
       SpotifyData().LaunchSpotifyApp();
       SetId();
     }
-    else{
-      SpotifyData().PlayMusic("3nU4o4IZJeieME6NYAgP1x");
-    }
   }
 
    CheckSpotifyApp() async {

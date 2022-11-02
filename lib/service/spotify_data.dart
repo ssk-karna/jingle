@@ -10,6 +10,7 @@ import '../constants.dart';
 import 'dart:io';
 import '../models/featured.dart';
 import '../models/play.dart';
+import '../models/playtrack.dart';
 import '../models/tracks.dart';
 import '../constants.dart';
 import 'package:http/http.dart' as http;
@@ -27,7 +28,6 @@ class SpotifyData{
     var featuredPlaylist = featuredFromJson(featuredData.body).playlists ;
     List<PlaylistItem> listOfFeaturedItems = featuredPlaylist.items!;
     print('Albums are :- $featuredPlaylist');
-
     return listOfFeaturedItems;
   }
 
@@ -39,10 +39,8 @@ class SpotifyData{
          // HttpHeaders.acceptHeader: 'application/json',
        },
      );
-     
      List<TrackItems> tracksList = tracksFromJson(tracksData.body).items! ;
      return tracksList;
-
    }
 
    Future<String?> _getId() async {
@@ -63,7 +61,6 @@ class SpotifyData{
 
    Future<void> FetchDevies() async {
 
-     //String? deviceID = await _getId();
      final prefs = await SharedPreferences.getInstance();
      var devicesResponse = await http.get(Uri.parse('https://api.spotify.com/v1/me/player/devices'),
        headers: {
@@ -77,9 +74,26 @@ class SpotifyData{
      Device_ID = prefs.getString('deviceid');
    }
 
+   PlayTrack(String track_id) async {
+     var offsetVal = OffsetTrack(position: 0);
+     var selectedMusic = Playtrack(
+         uris: ["spotify:track:$track_id"],
+         offset: offsetVal,
+         positionMs: 0
+     );
+
+     var playIt = await http.put(Uri.parse('https://api.spotify.com/v1/me/player/play?device_id=$Device_ID'),
+         headers: {
+           "Content-Type": 'application/json',
+           "authorization": 'Bearer $Access_Token',
+           // HttpHeaders.acceptHeader: 'application/json',
+         },
+         body: json.encode(selectedMusic)
+     );
+   }
 
     PlayMusic(String album_id) async {
-     var offsetVal = Offset(position: 5);
+     var offsetVal = Offset(position: 0);
      var selectedMusic = Play(
       contextUri: "spotify:album:$album_id",
        offset: offsetVal,
@@ -94,7 +108,15 @@ class SpotifyData{
        },
        body: json.encode(selectedMusic)
      );
-
+    //  {
+    //    "uris": ["spotify:track:1XIdLjLOIYCGtobNIXMwYS"],
+    //   "offset": {
+    //   "position": 0
+    //   },
+    //   "position_ms": 0
+    // }
+      //Poco F1 - 8187ca277f6a02c99ccb7f649812b44aa4b16369
+      // emulator - 46a120cac612ddd2b6e38ce02daa395aba4e10e8
    }
 
    Future<void> CheckSpotifyInstalledOnDevice() async {
@@ -110,9 +132,6 @@ class SpotifyData{
              ? debugPrint('$package enabled')
              : debugPrint('$package disabled'),
        );
-      bool check  = true;
-     // Returns: true
-
    }
    }
 }
