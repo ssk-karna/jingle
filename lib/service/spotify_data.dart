@@ -44,7 +44,6 @@ class SpotifyData{
      return tracksList;
    }
 
-
    Future<String?> _getId() async {
      var deviceInfo = DeviceInfoPlugin();
      if (Platform.isIOS) { // import 'dart:io'
@@ -121,10 +120,10 @@ class SpotifyData{
       // emulator - 46a120cac612ddd2b6e38ce02daa395aba4e10e8
    }
 
-   TransferPlayback() async {
+   TransferPlayback(String device_id) async {
      var offsetVal = OffsetTrack(position: 0);
      var selectedDevice = DevicesForTransfer(
-         deviceIds: ["8187ca277f6a02c99ccb7f649812b44aa4b16369"],
+         deviceIds: ["$device_id"],
      );
      var transferIt = await http.put(Uri.parse('https://api.spotify.com/v1/me/player'),
          headers: {
