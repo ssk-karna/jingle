@@ -30,6 +30,7 @@ class _HomePageState extends State<HomePage> {
    CheckSpotifyApp() async {
      await SpotifyData().CheckSpotifyInstalledOnDevice();
    }
+
    SetId() async {
      await SpotifyData().FetchDevies();
      var id = Device_ID;

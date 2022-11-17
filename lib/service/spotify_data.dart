@@ -8,6 +8,7 @@ import 'package:device_info_plus/device_info_plus.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import '../constants.dart';
 import 'dart:io';
+import '../models/devicesfortransfer.dart';
 import '../models/featured.dart';
 import '../models/play.dart';
 import '../models/playtrack.dart';
@@ -42,6 +43,7 @@ class SpotifyData{
      List<TrackItems> tracksList = tracksFromJson(tracksData.body).items! ;
      return tracksList;
    }
+
 
    Future<String?> _getId() async {
      var deviceInfo = DeviceInfoPlugin();
@@ -117,6 +119,21 @@ class SpotifyData{
     // }
       //Poco F1 - 8187ca277f6a02c99ccb7f649812b44aa4b16369
       // emulator - 46a120cac612ddd2b6e38ce02daa395aba4e10e8
+   }
+
+   TransferPlayback() async {
+     var offsetVal = OffsetTrack(position: 0);
+     var selectedDevice = DevicesForTransfer(
+         deviceIds: ["8187ca277f6a02c99ccb7f649812b44aa4b16369"],
+     );
+     var transferIt = await http.put(Uri.parse('https://api.spotify.com/v1/me/player'),
+         headers: {
+           "Content-Type": 'application/json',
+           "authorization": 'Bearer $Access_Token',
+           // HttpHeaders.acceptHeader: 'application/json',
+         },
+         body: json.encode(selectedDevice)
+     );
    }
 
    Future<void> CheckSpotifyInstalledOnDevice() async {
