@@ -3,6 +3,7 @@ import 'package:jingle/models/tracks.dart';
 import 'package:jingle/service/spotify_data.dart';
 import 'package:spotify/spotify.dart';
 import '../constants.dart';
+import '../models/currentlyplaying.dart';
 import '../models/devices.dart';
 
 class MusicList extends StatefulWidget {
@@ -11,7 +12,6 @@ class MusicList extends StatefulWidget {
 
    MusicList({ required this.listId, required this.playListPoster});
 
-
   @override
   State<MusicList> createState() => _MusicListState();
 }
@@ -19,16 +19,23 @@ class MusicList extends StatefulWidget {
 class _MusicListState extends State<MusicList> {
   List<TrackItems> trackItems = <TrackItems>[];
   List<AvailableDevice> devices = <AvailableDevice>[];
+
   @override
   void initState() {
     // TODO: implement initState
     super.initState();
     getTracksAsync();
+    transferPlaybackAsync("8187ca277f6a02c99ccb7f649812b44aa4b16369");
     var  poster = widget.playListPoster;
   }
 
   getTracksAsync() async {
     trackItems = await SpotifyData().FetchPlayistsTracks(widget.listId);
+    setState(() { });
+  }
+
+  transferPlaybackAsync(String deviceId) async {
+    await SpotifyData().TransferPlayback(deviceId);
     setState(() { });
   }
 

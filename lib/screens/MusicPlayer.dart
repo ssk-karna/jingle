@@ -1,13 +1,31 @@
 import 'package:flutter/cupertino.dart';
+import '../models/currentlyplaying.dart';
+import 'package:jingle/service/spotify_data.dart';
 
 class MusicPlayer extends StatefulWidget {
-  const MusicPlayer({Key? key}) : super(key: key);
+  static String id = "player_screen";
 
   @override
   State<MusicPlayer> createState() => _MusicPlayerState();
 }
 
 class _MusicPlayerState extends State<MusicPlayer> {
+
+  late CurrentlyPlayingItem? currentItem;
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    getCurrentlyPlayingAsync();
+  }
+
+  getCurrentlyPlayingAsync() async {
+    currentItem = await SpotifyData().GetCurrentlyPlaying();
+    print(currentItem?.name);
+    setState(() { });
+  }
+
+
   @override
   Widget build(BuildContext context) {
     return SafeArea(

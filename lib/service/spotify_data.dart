@@ -3,6 +3,7 @@ import 'dart:convert';
 import 'package:appcheck/appcheck.dart';
 import 'package:external_app_launcher/external_app_launcher.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:jingle/models/currentlyplaying.dart';
 import 'package:jingle/models/devices.dart';
 import 'package:device_info_plus/device_info_plus.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -73,6 +74,22 @@ class SpotifyData{
      List<AvailableDevice> availableDevices = devicesFromJson(devicesResponse.body).devices! ;
      await prefs.setString('deviceid', availableDevices[0].id.toString());
      Device_ID = prefs.getString('deviceid');
+   }
+
+   Future<CurrentlyPlayingItem?> GetCurrentlyPlaying() async {
+
+     var currentMuiscData = await http.get(Uri.parse('https://api.spotify.com/v1/me/player/currently-playing'),
+       headers: {
+         "content-type": 'application/json',
+         "authorization": 'Bearer $Access_Token',
+         // HttpHeaders.acceptHeader: 'application/json',
+       },
+     );
+
+    // Currentlyplaying playingNow = currentlyplayingToJson(currentMuiscData.body).items!;
+     var playingNow = currentlyplayingFromJson(currentMuiscData.body).currentlyPlayingItem;
+    // print("Currently Playing is :- $playingNow");
+     return playingNow;
    }
 
    PlayTrack(String track_id) async {

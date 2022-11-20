@@ -3,6 +3,7 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:jingle/releases.dart';
 import 'package:jingle/screens/HomePage.dart';
+import 'package:jingle/screens/MusicPlayer.dart';
 import 'package:jingle/screens/albumsList.dart';
 import 'package:jingle/screens/loginPage.dart';
 import 'package:jingle/service/remote_api_service.dart';
@@ -50,9 +51,6 @@ class _SpotifyDataState extends State<SpotifyData> {
     super.initState();
   // CheckLogin();
   }
-
-
-
 
     //var auth = client.tok
 
@@ -120,6 +118,7 @@ class _SpotifyDataState extends State<SpotifyData> {
       routes: {
         LoginPage.id: (context) => LoginPage(),
         HomePage.id: (context) => HomePage(),
+        MusicPlayer.id: (context) => MusicPlayer(),
       },
     );
   }

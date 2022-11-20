@@ -13,7 +13,7 @@ class Currentlyplaying {
     this.timestamp,
     this.context,
     this.progressMs,
-    this.item,
+    this.currentlyPlayingItem,
     this.currentlyPlayingType,
     this.actions,
     this.isPlaying,
@@ -22,7 +22,7 @@ class Currentlyplaying {
   int? timestamp;
   Context? context;
   int? progressMs;
-  Item? item;
+  CurrentlyPlayingItem? currentlyPlayingItem;
   String? currentlyPlayingType;
   Actions? actions;
   bool? isPlaying;
@@ -31,7 +31,7 @@ class Currentlyplaying {
     timestamp: json["timestamp"],
     context: Context.fromJson(json["context"]),
     progressMs: json["progress_ms"],
-    item: Item.fromJson(json["item"]),
+    currentlyPlayingItem: CurrentlyPlayingItem.fromJson(json["item"]),
     currentlyPlayingType: json["currently_playing_type"],
     actions: Actions.fromJson(json["actions"]),
     isPlaying: json["is_playing"],
@@ -41,7 +41,7 @@ class Currentlyplaying {
     "timestamp": timestamp,
     "context": context?.toJson(),
     "progress_ms": progressMs,
-    "item": item?.toJson(),
+    "item": currentlyPlayingItem?.toJson(),
     "currently_playing_type": currentlyPlayingType,
     "actions": actions?.toJson(),
     "is_playing": isPlaying,
@@ -124,8 +124,8 @@ class ExternalUrls {
   };
 }
 
-class Item {
-  Item({
+class CurrentlyPlayingItem {
+  CurrentlyPlayingItem({
     this.album,
     this.artists,
     this.availableMarkets,
@@ -163,7 +163,7 @@ class Item {
   String? type;
   String? uri;
 
-  factory Item.fromJson(Map<String, dynamic> json) => Item(
+  factory CurrentlyPlayingItem.fromJson(Map<String, dynamic> json) => CurrentlyPlayingItem(
     album: Album.fromJson(json["album"]),
     artists: List<Artist>.from(json["artists"].map((x) => Artist.fromJson(x))),
     availableMarkets: List<String>.from(json["available_markets"].map((x) => x)),
